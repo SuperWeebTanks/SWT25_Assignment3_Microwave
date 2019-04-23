@@ -59,9 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Integrationstest\IT1_Door.cs" />
-    <Compile Include="Integrationstest\IT2_Button.cs" />
-    <Compile Include="Integrationstest\IT3_UserInterface.cs" />
     <Compile Include="Unit.Tests\ButtonTest.cs" />
     <Compile Include="Unit.Tests\CookControllerTest.cs" />
     <Compile Include="Unit.Tests\DisplayTest.cs" />
@@ -82,7 +79,12 @@
       <Name>MicrowaveOvenClasses</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Integrationstest\IT1\" />
+    <Folder Include="Integrationstest\IT2\" />
+    <Folder Include="Integrationstest\IT3\" />
+    <Folder Include="Integrationstest\IT4\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
