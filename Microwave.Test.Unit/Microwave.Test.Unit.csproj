@@ -59,15 +59,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButtonTest.cs" />
-    <Compile Include="CookControllerTest.cs" />
-    <Compile Include="DisplayTest.cs" />
-    <Compile Include="DoorTest.cs" />
-    <Compile Include="LightTest.cs" />
-    <Compile Include="PowerTubeTest.cs" />
+    <Compile Include="Unit.Tests\ButtonTest.cs" />
+    <Compile Include="Unit.Tests\CookControllerTest.cs" />
+    <Compile Include="Unit.Tests\DisplayTest.cs" />
+    <Compile Include="Unit.Tests\DoorTest.cs" />
+    <Compile Include="Unit.Tests\LightTest.cs" />
+    <Compile Include="Unit.Tests\PowerTubeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimerTest.cs" />
-    <Compile Include="UserInterfaceTest.cs" />
+    <Compile Include="Unit.Tests\TimerTest.cs" />
+    <Compile Include="Unit.Tests\UserInterfaceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -78,6 +78,9 @@
       <Project>{2b04da6b-afe9-4548-aa05-84d806ba0fa4}</Project>
       <Name>MicrowaveOvenClasses</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Integrationstest\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
