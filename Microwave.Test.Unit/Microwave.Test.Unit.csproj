@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Integrationstest\IT1\Door_UserInterface.cs" />
+    <Compile Include="Integrationstest\IT1\startCancelButton_UserInterface.cs" />
     <Compile Include="Unit.Tests\ButtonTest.cs" />
     <Compile Include="Unit.Tests\CookControllerTest.cs" />
     <Compile Include="Unit.Tests\DisplayTest.cs" />
@@ -80,10 +82,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Integrationstest\IT1\" />
     <Folder Include="Integrationstest\IT2\" />
     <Folder Include="Integrationstest\IT3\" />
     <Folder Include="Integrationstest\IT4\" />
+    <Folder Include="Integrationstest\IT5\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
