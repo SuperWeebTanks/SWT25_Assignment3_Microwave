@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Design;
+﻿using System;
+using System.ComponentModel.Design;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Interfaces;
@@ -98,7 +99,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         public void UI_UserOpensDoorDuringSetup_LightOnDisplayBlanked()
         {
             //Act 
-            _powerButton.Press();
+            _powerButton.Pressed += Raise.EventWith(new object(), new EventArgs()); 
             _doorDriven.Open();
 
             //Assert
