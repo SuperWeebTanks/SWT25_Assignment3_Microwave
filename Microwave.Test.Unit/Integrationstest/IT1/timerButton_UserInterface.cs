@@ -80,7 +80,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         [Test]
         public void UI_TimerButtonPressedInDoorOpenState_ShowTimeIsNotCalled()
         {
-            _door.Open();
+            _door.Opened += Raise.Event();
             _timerButtonDriven.Press();
             _display.DidNotReceive().ShowTime(Arg.Any<int>(), Arg.Any<int>());
         }

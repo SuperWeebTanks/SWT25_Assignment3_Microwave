@@ -78,5 +78,35 @@
 
                 _display.Received(2).ShowPower(50);
             }
+
+        [Test]
+        public void UI_PowerButtonPressedInDoorOpenState_ShowPowerIsNotCalled()
+        {
+            _door.Opened += Raise.Event();
+
+            _powerButtonDriven.Press();
+            _display.DidNotReceive().ShowPower(Arg.Any<int>());
+        }
+
+        [Test]
+        public void UI_PowerButtonPressedInCookingState_ShowPowerIsNotCalled()
+        {
+            _powerButtonDriven.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButton.Pressed += Raise.Event();
+
+            _powerButtonDriven.Press();
+            _display.DidNotReceive().ShowPower(100);
+        }
+
+        [Test]
+        public void UI_PowerButtonPressedInSetTimeState_ShowPowerIsNotCalled()
+        {
+            _powerButtonDriven.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+
+            _powerButtonDriven.Press();
+            _display.DidNotReceive().ShowPower(100);
         }
     }
+}
