@@ -62,7 +62,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT3
         }
 
         [Test]
-        public void OnTimerEvent_TimerTickCalled_OneTime()
+        public void OnTimerEvent_TimerTickCalled_SixtyTimes()
         {
             int ticks = 0;
             _timer.TimerTick+= (sender, args) => ticks++;
@@ -73,6 +73,20 @@ namespace Microwave.Test.Unit.Integrationstest.IT3
             _startCancelButton.Press();
             Thread.Sleep(61000);
             Assert.That(ticks,Is.EqualTo(60));
+        }
+
+        [Test]
+        public void Expire_ExpireCalled_OneTime()
+        {
+            int tick = 0;
+            _timer.Expired += (sender, args) => tick++;
+            _door.Open();
+            _door.Close();
+            _powerButton.Press();
+            _timerButton.Press();
+            _startCancelButton.Press();
+            Thread.Sleep(61000);
+            Assert.That(tick, Is.EqualTo(1));
         }
     }
 }
