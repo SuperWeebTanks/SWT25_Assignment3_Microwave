@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.Design;
+﻿using System;
+using System.ComponentModel.Design;
+using Castle.Core.Smtp;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Interfaces;
@@ -39,9 +41,9 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
             _doorDriven = new Door();
 
             //Module to integrate
-            _uiToIntegrate = new UserInterface(_powerButton, _timerButton, 
+            _uiToIntegrate = new UserInterface(_powerButton, _timerButton,
                 _startCancelButton, _doorDriven, _display, _light, _cookController);
-            
+
         }
 
         //Open door, light received TurnON() (Normal SD)
@@ -52,7 +54,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
             _doorDriven.Open();
 
             //Assert
-            _light.Received().TurnOn();
+            _light.Received(1).TurnOn();
         }
 
         [Test]
@@ -75,7 +77,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
             _doorDriven.Close();
 
             //Assert
-            _light.Received().TurnOff();
+            _light.Received(1).TurnOff();
         }
 
 
@@ -95,35 +97,88 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         //Open door, CookController received Stop() (Extension 2) 
         //User opens the door during setup 
         [Test]
-        public void UI_UserOpensDoorDuringSetup_LightOnDisplayBlanked()
+        public void UI_UserOpensDoorDuringSetup_LightOn()
         {
             //Act 
-            _powerButton.Press();
+            _powerButton.Pressed += Raise.Event(); 
             _doorDriven.Open();
 
             //Assert
-            _light.Received().TurnOn();
-            _display.Received().Clear();
+            _light.Received(1).TurnOn();
 
+        }
+
+        [Test]
+        public void UI_UserOpensDoorDuringSetup_DisplayCleared()
+        {
+            //Act 
+            _powerButton.Pressed += Raise.Event();
+            _doorDriven.Open();
+
+            //Assert
+            _display.Received(1).Clear();
         }
 
         //Open door, CookController received Stop() (Extension 4)
         //User opens the door during cooking 
         [Test]
-        public void UI_UserOpensDoorDuringCooking_PowerTubeOffDisplayBlanked()
+        public void UI_UserOpensDoorDuringCooking_CookingStopsDisplayBlanked()
         {
             //Act
-            _powerButton.Press();
-            _timerButton.Press();
-            _startCancelButton.Press();
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButton.Pressed += Raise.Event();
             _doorDriven.Open();
 
             //Assert 
+            _cookController.Received(1).Stop();
             
+        }
+
+        [Test]
+        public void UI_UserOpensDoorDuringCooking_DisplayCleared()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButton.Pressed += Raise.Event();
+            _doorDriven.Open();
+
+            //Assert 
+            _display.Received(1).Clear();
 
         }
 
+        //Step 15, User opens door efter timer has expired and food is ready 
+        [Test]
+        public void UI_UserOpensDoorAfterFoodIsReady_LightOn()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButton.Pressed += Raise.Event();
+           _uiToIntegrate.CookingIsDone();
+           _doorDriven.Open();
 
+            //Assert
+            _light.Received(2).TurnOn();
+        }
+
+        //Step 18, User closes door after removing food. 
+        [Test]
+        public void UI_UserClosesDoorAfterRemovingFood_LightOff()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButton.Pressed += Raise.Event();
+            _uiToIntegrate.CookingIsDone();
+            _doorDriven.Open();
+            _doorDriven.Close();
+
+            //Assert
+            _light.Received(2).TurnOff();
+        }
 
     }
 }
