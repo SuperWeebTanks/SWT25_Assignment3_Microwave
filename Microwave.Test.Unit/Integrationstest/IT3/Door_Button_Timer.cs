@@ -75,18 +75,18 @@ namespace Microwave.Test.Unit.Integrationstest.IT3
             Assert.That(ticks,Is.EqualTo(60));
         }
 
-        [Test]
-        public void Expire_ExpireCalled_OneTime()
-        {
-            int tick = 0;
-            _timer.Expired += (sender, args) => tick++;
-            _door.Open();
-            _door.Close();
-            _powerButton.Press();
-            _timerButton.Press();
-            _startCancelButton.Press();
-            Thread.Sleep(61000);
-            Assert.That(tick, Is.EqualTo(1));
-        }
+        //[Test]
+        //public void Expire_ExpireCalled_OneTime()
+        //{
+        //    int tick = 0;
+        //    _timer.Expired += (sender, args) => tick++;
+        //    _door.Open();
+        //    _door.Close();
+        //    _powerButton.Press();
+        //    _timerButton.Press();
+        //    _startCancelButton.Press();
+        //    Thread.Sleep(61000);
+        //    Assert.That(tick, Is.EqualTo(1));
+        //}
     }
 }
