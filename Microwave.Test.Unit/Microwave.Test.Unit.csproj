@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Integrationstest\IT1\Door_UserInterface.cs" />
+    <Compile Include="Integrationstest\IT1\powerButton_UserInterface.cs" />
     <Compile Include="Integrationstest\IT1\startCancelButton_UserInterface.cs" />
     <Compile Include="Integrationstest\IT1\timerButton_UserInterface.cs" />
     <Compile Include="Integrationstest\IT2\Door_Button_CookController.cs" />
