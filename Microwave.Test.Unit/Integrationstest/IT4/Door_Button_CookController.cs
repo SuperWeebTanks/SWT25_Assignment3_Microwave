@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microwave.Test.Unit.Integrationstest.IT1
+namespace Microwave.Test.Unit.Integrationstest.IT4
 {
-    public class startCancelButton_UserInterface
+    class Door_Button_CookController
     {
-
     }
 }
