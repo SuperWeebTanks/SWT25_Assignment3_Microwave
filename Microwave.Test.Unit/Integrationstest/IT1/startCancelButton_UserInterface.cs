@@ -22,7 +22,6 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         private IDisplay _display;
         private ILight _light;
         private ICookController _cookController;
-        private ITimer _timer; 
 
         //Included Modules 
         private UserInterface _uiToIntegrate;
@@ -40,7 +39,6 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
             _display = Substitute.For<IDisplay>();
             _light = Substitute.For<ILight>();
             _cookController = Substitute.For<ICookController>();
-            _timer = Substitute.For<ITimer>();
 
             //DrivenModule
             _startCancelButtonDriven = new Button();
@@ -164,6 +162,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
             //Assert
             _cookController.StartCooking(50,60);
+           
         }
     }
 }
