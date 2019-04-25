@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
@@ -21,6 +22,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         private IDisplay _display;
         private ILight _light;
         private ICookController _cookController;
+        private ITimer _timer; 
 
         //Included Modules 
         private UserInterface _uiToIntegrate;
@@ -38,8 +40,9 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
             _display = Substitute.For<IDisplay>();
             _light = Substitute.For<ILight>();
             _cookController = Substitute.For<ICookController>();
+            _timer = Substitute.For<ITimer>();
 
-            //Module Driver
+            //DrivenModule
             _startCancelButtonDriven = new Button();
 
             //Module to integrate
@@ -48,5 +51,119 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         }
 
+        //User presses start cancel button during cooking (Extension 3)
+        [Test]
+        public void UI_UserPressesStartCancelButtonDuringCooking_StopCooking()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+
+            //Assert
+            _cookController.Received(1).Stop();
+
+        }
+
+        //User presses start cancel button during cooking (Extension 3)
+        [Test]
+        public void UI_UserPressesStartCancelButtonDuringCooking_DisplayBlanked()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+
+            //Assert
+            _display.Received(2).Clear();
+
+        }
+
+        //User presses start cancel button during cooking (Extension 3)
+        [Test]
+        public void UI_UserPressesStartCancelButtonDuringCooking_LightOff()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+
+            //Assert 
+            _light.Received(1).TurnOff();
+        }
+
+        //User presses start cancel button during cooking (Extension 3)
+        [Test]
+        public void UI_UserPressesStartCancelTwiceButtonDuringCooking_NothingHappensOnSecondPress()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+            //Second Press
+            _startCancelButtonDriven.Press();
+
+            //Assert
+            _cookController.Received(1).Stop();
+            _display.Received(2).Clear();
+            _light.Received(1).TurnOff();
+
+        }
+
+        
+        //User presses start cancel button under power setup (Extension 1) 
+        [Test]
+        public void UI_UserPressesStartCancelButtonUnderPowerSetup_DisplayCleared()
+        {
+            //Act 
+            _powerButton.Pressed += Raise.Event();
+            _startCancelButtonDriven.Press();
+
+            //Assert
+            _display.Received(1).Clear();
+        }
+
+        //User presses start cancel button twice at start 
+        [Test]
+        public void UI_UserPressesStartCancelButtonTwice_NothingHappensOnSecondPress()
+        {
+            //Act 
+            _powerButton.Pressed += Raise.Event();
+            _startCancelButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+
+            //Assert
+            _display.Received(1).ShowPower(50);
+            _display.Received(1).Clear();
+        }
+
+        [Test]
+        public void UI_UserPressesStartCancelButtonAfterTimerSetup_LightOn()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButtonDriven.Press();
+            
+            //Assert
+            _light.Received().TurnOn(); 
+
+        }
+
+        [Test]
+        public void UI_UserPressesStartCancelButtonAfterTimerSetup_StartCooking()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButtonDriven.Press();
+
+            //Assert
+            _cookController.StartCooking(50,60);
+        }
     }
 }

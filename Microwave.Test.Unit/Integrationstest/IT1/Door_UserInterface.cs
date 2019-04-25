@@ -97,7 +97,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         //Open door, CookController received Stop() (Extension 2) 
         //User opens the door during setup 
         [Test]
-        public void UI_UserOpensDoorDuringSetup_LightOnDisplayBlanked()
+        public void UI_UserOpensDoorDuringSetup_LightOn()
         {
             //Act 
             _powerButton.Pressed += Raise.Event(); 
@@ -105,14 +105,24 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
             //Assert
             _light.Received(1).TurnOn();
-            _display.Received(1).Clear();
 
+        }
+
+        [Test]
+        public void UI_UserOpensDoorDuringSetup_DisplayCleared()
+        {
+            //Act 
+            _powerButton.Pressed += Raise.Event();
+            _doorDriven.Open();
+
+            //Assert
+            _display.Received(1).Clear();
         }
 
         //Open door, CookController received Stop() (Extension 4)
         //User opens the door during cooking 
         [Test]
-        public void UI_UserOpensDoorDuringCooking_PowerTubeOffDisplayBlanked()
+        public void UI_UserOpensDoorDuringCooking_CookingStopsDisplayBlanked()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
@@ -121,11 +131,24 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
             _doorDriven.Open();
 
             //Assert 
-            _cookController.Received().Stop();
-            _display.Received(1).Clear();
+            _cookController.Received(1).Stop();
             
         }
-        
+
+        [Test]
+        public void UI_UserOpensDoorDuringCooking_DisplayCleared()
+        {
+            //Act
+            _powerButton.Pressed += Raise.Event();
+            _timerButton.Pressed += Raise.Event();
+            _startCancelButton.Pressed += Raise.Event();
+            _doorDriven.Open();
+
+            //Assert 
+            _display.Received(1).Clear();
+
+        }
+
         //Step 15, User opens door efter timer has expired and food is ready 
         [Test]
         public void UI_UserOpensDoorAfterFoodIsReady_LightOn()
