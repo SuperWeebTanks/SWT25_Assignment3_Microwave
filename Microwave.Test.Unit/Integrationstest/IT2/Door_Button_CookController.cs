@@ -18,27 +18,27 @@ namespace Microwave.Test.Unit.Integrationstest.IT2
         private IPowerTube _powerTube;
         private ILight _light;
         private IDisplay _display;
-        private CookController _cookController;
+        private CookController _cookControllerToIntegrate;
         private UserInterface _userInterface;
-        private Door _door;
-        private Button _startCancelButton;
-        private Button _timerButton;
-        private Button _powerButton;
+        private Door _doorDriven;
+        private Button _startCancelButtonDriven;
+        private Button _timerButtonDriven;
+        private Button _powerButtonDriven;
 
         [SetUp]
         public void Setup()
         {
-            _startCancelButton = new Button();
-            _powerButton = new Button();
-            _timerButton = new Button();
-            _door=new Door();
+            _startCancelButtonDriven = new Button();
+            _powerButtonDriven = new Button();
+            _timerButtonDriven = new Button();
+            _doorDriven=new Door();
             _timer = Substitute.For<ITimer>();
             _powerTube = Substitute.For<IPowerTube>();
             _light= Substitute.For<ILight>();
             _display= Substitute.For<IDisplay>();
-            _cookController= new CookController(_timer,_display,_powerTube);
-            _userInterface=new UserInterface(_powerButton,_timerButton,_startCancelButton,_door,_display,_light,_cookController);
-            _cookController.UI = _userInterface;
+            _cookControllerToIntegrate= new CookController(_timer,_display,_powerTube);
+            _userInterface=new UserInterface(_powerButtonDriven,_timerButtonDriven,_startCancelButtonDriven,_doorDriven,_display,_light,_cookControllerToIntegrate);
+            _cookControllerToIntegrate.UI = _userInterface;
         }
 
         [TestCase(1)]
@@ -57,14 +57,14 @@ namespace Microwave.Test.Unit.Integrationstest.IT2
         [TestCase(14)]
         public void StartCooking_PowerTubeReceivesCorrectPowerArgument(int x)
         {
-            _door.Open();
-            _door.Close();
+            _doorDriven.Open();
+            _doorDriven.Close();
             for (int i = 0; i < x; i++)
             {
-                _powerButton.Press();
+                _powerButtonDriven.Press();
             }
-            _timerButton.Press();
-            _startCancelButton.Press();
+            _timerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
             _powerTube.Received().TurnOn(Arg.Is(x*50));
         }
 
@@ -73,19 +73,16 @@ namespace Microwave.Test.Unit.Integrationstest.IT2
         [TestCase(3)]
         public void StartCooking_TimerReceivesCorrectTime(int x)
         {
-            _door.Open();
-            _door.Close();
-            _powerButton.Press();
+            _doorDriven.Open();
+            _doorDriven.Close();
+            _powerButtonDriven.Press();
             for (int i = 0; i < x; i++)
             {
-                _timerButton.Press();
+                _timerButtonDriven.Press();
             }
-            _startCancelButton.Press();
+            _startCancelButtonDriven.Press();
             _timer.Received().Start(Arg.Is(x*60));
 
         }
-
-       
-
     }
 }
