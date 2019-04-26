@@ -83,6 +83,7 @@ namespace MicrowaveOvenClasses.Controllers
                     myState = States.READY;
                     break;
                 case States.SETTIME:
+                    //Hvorfor clearer den her? Det står ikke i sekvensdiagrammet
                     myDisplay.Clear();
                     myLight.TurnOn();
                     myCooker.StartCooking(powerLevel, time*60);
