@@ -66,7 +66,7 @@
     <Compile Include="Integrationstest\IT2\Door_Button_CookController.cs" />
     <Compile Include="Integrationstest\IT2\CookController_UserInterface.cs" />
     <Compile Include="Integrationstest\IT3\Door_Button_Timer.cs" />
-    <Compile Include="Integrationstest\IT4\Door_Button_CookController.cs" />
+    <Compile Include="Integrationstest\IT5\Door_Button_CookController.cs" />
     <Compile Include="Integrationstest\IT4\Door_Button_Powertube.cs" />
     <Compile Include="Integrationstest\IT6\Door_Button_Display.cs" />
     <Compile Include="Unit.Tests\ButtonTest.cs" />
@@ -89,9 +89,7 @@
       <Name>MicrowaveOvenClasses</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Integrationstest\IT5\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

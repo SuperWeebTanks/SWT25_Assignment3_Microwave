@@ -97,9 +97,17 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
             _display.Received(1).ShowTime(Arg.Is(0), Arg.Is(0));
         }
 
-        public void OntimerTick_ShowTimeInDisplayClassIsCalled_WithOneMinuteAndZeroSeconds()
+        [Test]
+        public void OntimerTick_ShowTimeInDisplayClassIsCalled_WithOneMinuteAndFiftyNineSeconds()
         {
-
+            _door.Open();
+            _door.Close();
+            _powerButton.Press();
+            _timerButton.Press();
+            _timerButton.Press();
+            _startCancelButton.Press();
+            Thread.Sleep(121000);
+            _display.Received(1).ShowTime(Arg.Is(1), Arg.Is(59));
         }
     }
     
