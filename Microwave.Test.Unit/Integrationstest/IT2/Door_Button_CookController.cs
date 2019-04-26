@@ -84,5 +84,57 @@ namespace Microwave.Test.Unit.Integrationstest.IT2
             _timer.Received().Start(Arg.Is(x*60));
 
         }
+
+        [Test]
+        public void Stop_ExtensionDoorIsOpenedDuringPowerSetup_TurnOffInPowertubeIsCalled()
+        {
+            _doorDriven.Open();
+            _doorDriven.Close();
+            _powerButtonDriven.Press();
+            _timerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+            _doorDriven.Open();
+            _powerTube.Received(1).TurnOff();
+        }
+       
+
+        [Test]
+        public void Stop_ExtensionDoorIsOpenedDuringCooking_StopInTimerIsCalled()
+        {
+            _doorDriven.Open();
+            _doorDriven.Close();
+            _powerButtonDriven.Press();
+            _timerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+            _doorDriven.Open();
+
+            _timer.Received(1).Stop();
+        }
+
+        [Test]
+        public void Stop_ExtensionStartCancelButtonPressedDuringCooking_TurnOffInPowertubeIsCalled()
+        {
+            _doorDriven.Open();
+            _doorDriven.Close();
+            _powerButtonDriven.Press();
+            _timerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+
+            _powerTube.Received(1).TurnOff();
+        }
+
+        [Test]
+        public void Stop_ExtensionStartCancelButtonPressedDuringCooking_StopInTimerIsCalled()
+        {
+            _doorDriven.Open();
+            _doorDriven.Close();
+            _powerButtonDriven.Press();
+            _timerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+
+            _powerTube.Received(1).TurnOff();
+        }
     }
 }
