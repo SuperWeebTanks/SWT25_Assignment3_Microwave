@@ -16,7 +16,7 @@ namespace MicrowaveOvenClasses.Boundary
 
         public void TurnOn(int power)
         {
-            double powerPercentage = ((double)power / 700) * 100;
+            double powerPercentage = Math.Round((((double)power / 700) * 100),2);
             
             if (powerPercentage < 1 || 100 < powerPercentage)
             {

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Interfaces;
@@ -45,6 +46,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
         [Test]
         public void StartCooking_PowerTubeTurnsOn_OutputLineCalledCorrectly()
         {
+
             _powerButtonDriven.Press();
             _timerButtonDriven.Press();
             _startCancelButtonDriven.Press();
@@ -55,6 +57,8 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
         [Test]
         public void Stop_PowerTubeTurnsOff_OutputLineCalledCorrectly()
         {
+            _doorDriven.Open();
+            _doorDriven.Close();
             _powerButtonDriven.Press();
             _timerButtonDriven.Press();
             _startCancelButtonDriven.Press();
@@ -79,6 +83,8 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
         [Test]
         public void OnDoorOpened_WhileCookingPowerTubeTurnsOff_OutputLineCalledCorrectly()
         {
+            _doorDriven.Open();
+            _doorDriven.Close();
             _powerButtonDriven.Press();
             _timerButtonDriven.Press();
             _startCancelButtonDriven.Press();
@@ -104,7 +110,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
                 power = (power >= 700 ? 50 : power + 50);
             }
 
-            double powerPercentage = ((double)power / 700) * 100;
+            double powerPercentage = Math.Round((((double)power / 700) * 100), 2);
 
             _timerButtonDriven.Press();
             _startCancelButtonDriven.Press();
