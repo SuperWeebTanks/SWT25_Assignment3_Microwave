@@ -36,8 +36,11 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         [TestCase(0)]
         [TestCase(1)]
         [TestCase(60)]
-        public void UI_TimerButtonPressedRepeatedly_ShowTimeCalledCorrectNumberOfTimes(int number)
+        public void OnTimePressed_TimerButtonPressedRepeatedly_ShowTimeCalledCorrectNumberOfTimes(int number)
         {
+            _door.Open();
+            _door.Close();
+
             _powerButton.Pressed += Raise.Event();
 
             for (int i = 0; i < number; i++)
@@ -49,8 +52,10 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(60)]
-        public void UI_TimerButtonPressedRepeatedly_ShowTimeCalledWithCorrectArguments(int number)
+        public void OnTimePressed_TimerButtonPressedRepeatedly_ShowTimeCalledWithCorrectArguments(int number)
         {
+            _door.Open();
+            _door.Close();
             _powerButton.Pressed += Raise.Event();
 
             for (int i = 0; i < number; i++)
@@ -60,15 +65,18 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         }
 
         [Test]
-        public void UI_TimerButtonPressedInReadyState_ShowTimeIsNotCalled()
+        public void OnTimePressed_TimerButtonPressedInReadyState_ShowTimeIsNotCalled()
         {
             _timerButtonDriven.Press();
             _display.DidNotReceive().ShowTime(Arg.Any<int>(), Arg.Any<int>());
         }
 
         [Test]
-        public void UI_TimerButtonPressedInCookingState_ShowTimeIsNotCalled()
+        public void OnTimePressed_TimerButtonPressedInCookingState_ShowTimeIsNotCalled()
         {
+            _door.Open();
+            _door.Close();
+
             _powerButton.Pressed += Raise.Event();
             _timerButtonDriven.Pressed += Raise.Event();
             _startCancelButton.Pressed += Raise.Event();
@@ -78,7 +86,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         }
 
         [Test]
-        public void UI_TimerButtonPressedInDoorOpenState_ShowTimeIsNotCalled()
+        public void OnTimePressed_TimerButtonPressedInDoorOpenState_ShowTimeIsNotCalled()
         {
             _door.Opened += Raise.Event();
             _timerButtonDriven.Press();
