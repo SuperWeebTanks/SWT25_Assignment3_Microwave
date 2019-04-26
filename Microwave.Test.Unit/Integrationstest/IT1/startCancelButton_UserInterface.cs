@@ -51,7 +51,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         //User presses start cancel button during cooking (Extension 3)
         [Test]
-        public void UI_UserPressesStartCancelButtonDuringCooking_StopCooking()
+        public void Stop_UserPressesStartCancelButtonDuringCooking_StopCooking()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
@@ -66,7 +66,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         //User presses start cancel button during cooking (Extension 3)
         [Test]
-        public void UI_UserPressesStartCancelButtonDuringCooking_DisplayBlanked()
+        public void Clear_UserPressesStartCancelButtonDuringCooking_DisplayBlanked()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
@@ -81,7 +81,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         //User presses start cancel button during cooking (Extension 3)
         [Test]
-        public void UI_UserPressesStartCancelButtonDuringCooking_LightOff()
+        public void TurnOff_UserPressesStartCancelButtonDuringCooking_LightOff()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
@@ -95,7 +95,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         //User presses start cancel button during cooking (Extension 3)
         [Test]
-        public void UI_UserPressesStartCancelTwiceButtonDuringCooking_NothingHappensOnSecondPress()
+        public void TurnOff_UserPressesStartCancelTwiceButtonDuringCooking_NothingHappensOnSecondPress()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
@@ -115,7 +115,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         
         //User presses start cancel button under power setup (Extension 1) 
         [Test]
-        public void UI_UserPressesStartCancelButtonUnderPowerSetup_DisplayCleared()
+        public void Clear_UserPressesStartCancelButtonUnderPowerSetup_DisplayCleared()
         {
             //Act 
             _powerButton.Pressed += Raise.Event();
@@ -127,7 +127,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         //User presses start cancel button twice at start 
         [Test]
-        public void UI_UserPressesStartCancelButtonTwice_NothingHappensOnSecondPress()
+        public void Clear_UserPressesStartCancelButtonTwice_NothingHappensOnSecondPress()
         {
             //Act 
             _powerButton.Pressed += Raise.Event();
@@ -140,7 +140,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         }
 
         [Test]
-        public void UI_UserPressesStartCancelButtonAfterTimerSetup_LightOn()
+        public void TurnON_UserPressesStartCancelButtonAfterTimerSetup_LightOn()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
@@ -153,7 +153,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         }
 
         [Test]
-        public void UI_UserPressesStartCancelButtonAfterTimerSetup_StartCooking()
+        public void StartCooking_UserPressesStartCancelButtonAfterTimerSetup_StartCooking()
         {
             //Act
             _powerButton.Pressed += Raise.Event();

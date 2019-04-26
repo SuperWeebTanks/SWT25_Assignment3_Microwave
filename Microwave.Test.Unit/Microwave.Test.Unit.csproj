@@ -69,6 +69,7 @@
     <Compile Include="Integrationstest\IT5\Door_Button_CookController.cs" />
     <Compile Include="Integrationstest\IT4\Door_Button_Powertube.cs" />
     <Compile Include="Integrationstest\IT6\Door_Button_Display.cs" />
+    <Compile Include="Integrationstest\IT7\Door_Button_Light.cs" />
     <Compile Include="Unit.Tests\ButtonTest.cs" />
     <Compile Include="Unit.Tests\CookControllerTest.cs" />
     <Compile Include="Unit.Tests\DisplayTest.cs" />

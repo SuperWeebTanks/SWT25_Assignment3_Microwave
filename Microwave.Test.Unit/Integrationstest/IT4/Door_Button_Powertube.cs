@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Interfaces;
@@ -43,8 +44,9 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
         }
 
         [Test]
-        public void StartCooking_PowerTubeTurnsOn_OutputLineCalled()
+        public void StartCooking_PowerTubeTurnsOn_OutputLineCalledCorrectly()
         {
+
             _powerButtonDriven.Press();
             _timerButtonDriven.Press();
             _startCancelButtonDriven.Press();
@@ -53,8 +55,10 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
         }
 
         [Test]
-        public void Stop_PowerTubeTurnsOff_OutputLineCalled()
+        public void Stop_PowerTubeTurnsOff_OutputLineCalledCorrectly()
         {
+            _doorDriven.Open();
+            _doorDriven.Close();
             _powerButtonDriven.Press();
             _timerButtonDriven.Press();
             _startCancelButtonDriven.Press();
@@ -64,7 +68,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
         }
 
         [Test]
-        public void OnTimerExpired_PowerTubeTurnsOff_OutputLineCalled()
+        public void OnTimerExpired_PowerTubeTurnsOff_OutputLineCalledCorrectly()
         {
             _doorDriven.Open();
             _doorDriven.Close();
@@ -74,6 +78,19 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
             Thread.Sleep(61000);
 
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube turned off")));
+        }
+
+        [Test]
+        public void OnDoorOpened_WhileCookingPowerTubeTurnsOff_OutputLineCalledCorrectly()
+        {
+            _doorDriven.Open();
+            _doorDriven.Close();
+            _powerButtonDriven.Press();
+            _timerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+            _doorDriven.Open();
+
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Equals("PowerTube turned off")));
         }
 
         [TestCase(1)]
@@ -93,7 +110,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
                 power = (power >= 700 ? 50 : power + 50);
             }
 
-            double powerPercentage = ((double)power / 700) * 100;
+            double powerPercentage = Math.Round((((double)power / 700) * 100), 2);
 
             _timerButtonDriven.Press();
             _startCancelButtonDriven.Press();

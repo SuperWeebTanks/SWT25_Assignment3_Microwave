@@ -35,9 +35,15 @@
 
             [TestCase(0)]
             [TestCase(1)]
+            [TestCase(2)]
+            [TestCase(14)]
+            [TestCase(15)]
             [TestCase(60)]
-            public void UI_PowerButtonPressed_ShowPowerCalledCorrectNumberOfTimes(int number)
+            public void OnPowerPressed_PowerButtonPressedRepeatedly_ShowPowerCalledCorrectNumberOfTimes(int number)
             {
+                _door.Open();
+                _door.Close();
+
                 for (int i = 0; i < number; i++)
                     _powerButtonDriven.Press();
 
@@ -45,16 +51,20 @@
             }
 
             [Test]
-            public void UI_PowerButtonPressedOnce_ShowPowerCalledWithCorrectArgument()
+            public void OnPowerPressed_PowerButtonPressedOnce_ShowPowerCalledWithCorrectArgument()
             {
+                _door.Open();
+                _door.Close();
                 _powerButtonDriven.Press();
 
                 _display.Received(1).ShowPower(50);
             }
 
             [Test]
-            public void UI_PowerButtonPressedTwice_ShowPowerCalledWithCorrectArgument()
+            public void OnPowerPressed_PowerButtonPressedTwice_ShowPowerCalledWithCorrectArgument()
             {
+                _door.Open();
+                _door.Close();
                 _powerButtonDriven.Press();
                 _powerButtonDriven.Press();
 
@@ -62,8 +72,11 @@
             }
 
             [Test]
-            public void UI_PowerButtonPressedFourteenTimes_ShowPowerCalledWithCorrectArgument()
+            public void OnPowerPressed_PowerButtonPressedFourteenTimes_ShowPowerCalledWithCorrectArgument()
             {
+                _door.Open();
+                _door.Close();
+
                 for (int i = 0; i < 14; i++)
                     _powerButtonDriven.Press();
 
@@ -71,8 +84,11 @@
             }
 
             [Test]
-            public void UI_PowerButtonPressedFifteenTimes_ShowPowerCalledWithCorrectArgument()
+            public void OnPowerPressed_PowerButtonPressedFifteenTimes_ShowPowerCalledWithCorrectArgument()
             {
+                _door.Open();
+                _door.Close();
+
                 for (int i = 0; i < 15; i++)
                     _powerButtonDriven.Press();
 
@@ -80,7 +96,7 @@
             }
 
         [Test]
-        public void UI_PowerButtonPressedInDoorOpenState_ShowPowerIsNotCalled()
+        public void OnPowerPressed_PowerButtonPressedInDoorOpenState_ShowPowerIsNotCalled()
         {
             _door.Opened += Raise.Event();
 
@@ -89,8 +105,11 @@
         }
 
         [Test]
-        public void UI_PowerButtonPressedInCookingState_ShowPowerIsNotCalled()
+        public void OnPowerPressed_PowerButtonPressedInCookingState_ShowPowerIsNotCalled()
         {
+            _door.Open();
+            _door.Close();
+
             _powerButtonDriven.Pressed += Raise.Event();
             _timerButton.Pressed += Raise.Event();
             _startCancelButton.Pressed += Raise.Event();
@@ -100,8 +119,11 @@
         }
 
         [Test]
-        public void UI_PowerButtonPressedInSetTimeState_ShowPowerIsNotCalled()
+        public void OnPowerPressed_PowerButtonPressedInSetTimeState_ShowPowerIsNotCalled()
         {
+            _door.Open();
+            _door.Close();
+
             _powerButtonDriven.Pressed += Raise.Event();
             _timerButton.Pressed += Raise.Event();
 
