@@ -21,7 +21,6 @@ namespace Microwave.Test.Unit.Integrationstest.IT3
         private ILight _light;
         private ITimer _timer;
         private IPowerTube _tube;
-        private ICookController _stubCoooker; 
         
         //Included Modules 
         private Button _startCancelButton;
@@ -41,14 +40,14 @@ namespace Microwave.Test.Unit.Integrationstest.IT3
             _light = Substitute.For<ILight>();
             _timer = Substitute.For<ITimer>();
             _tube = Substitute.For<IPowerTube>();
-            _stubCoooker = Substitute.For<ICookController>();
 
             _startCancelButton = new Button();
             _powerButton = new Button();
             _timerButton = new Button();
             _door = new Door();
-            _uiToIntegrate = new UserInterface(_powerButton, _timerButton, _startCancelButton, _door, _display, _light, _stubCoooker);
-            _cookControllerDriven = new CookController(_timer, _display, _tube, _uiToIntegrate);
+            _cookControllerDriven = new CookController(_timer, _display, _tube);
+            _uiToIntegrate = new UserInterface(_powerButton, _timerButton, _startCancelButton, _door, _display, _light, _cookControllerDriven);
+            _cookControllerDriven.UI = _uiToIntegrate;
         }
 
         [Test]
@@ -59,7 +58,6 @@ namespace Microwave.Test.Unit.Integrationstest.IT3
             _timerButton.Press();
             _startCancelButton.Press();
 
-           _cookControllerDriven.StartCooking(50, 60);
            _timer.Expired += Raise.Event();
 
             //Assert
@@ -74,7 +72,6 @@ namespace Microwave.Test.Unit.Integrationstest.IT3
             _timerButton.Press();
             _startCancelButton.Press();
 
-            _cookControllerDriven.StartCooking(50, 60);
             _timer.Expired += Raise.Event();
 
             //Assert
