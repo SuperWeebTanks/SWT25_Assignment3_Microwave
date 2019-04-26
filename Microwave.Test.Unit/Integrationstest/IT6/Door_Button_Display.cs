@@ -53,7 +53,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
 
         [Test]
         public void Display_ShowPowerOutPut_LogsLineCorrectPowerLevel(
-            [Values(1,2,3,4,5,6,7,8,9,9,10,11,12,13,14,15,16,100)] int x)
+            [Values(1,2,3,4,5,6,7,8,9,9,10,11,100)] int x)
         {
             //Act
             for (int i = 0; i <= x; i++)
@@ -68,7 +68,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
 
         [Test]
         public void Display_ShowTimerOutPut_LogsCorrectLine(
-            [Values(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 98, 99, 100, 101, 102)] int x)
+            [Values(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99, 100, 101)] int x)
         {
             //Act
             _powerButtonDriven.Press();
@@ -84,31 +84,27 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
                 .OutputLine(x >= 10 ? Arg.Is<string>($"Display shows: {x}:00") : Arg.Is<string>($"Display shows: 0{x}:00"));
         }
 
-        [Ignore("Not Ready")]
         [Test]
-        public void Display_ShowTimeTicksAtDifferentPowerLevels_LogsLine(
-            [Values(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)] int x, [Values(1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 11, 12, 13, 14)] int y)
+        public void Display_ShowTimeTicks_LogsLine(
+            [Values(1, 2, 3)] int x)
         {
-            //Act
-            for (int i = 0; i <= y; i++)
-            {
-                _powerButtonDriven.Press();
-            }
-            
+            //Act 
+            _powerButtonDriven.Press();
             for (int i = 0; i <= x; i++)
             {
                 _timerButtonDriven.Press();
             }
+            _startCancelButtonDriven.Press();
+
             Thread.Sleep(x*61*1000);
 
-            for (int i = 0; i <= x * 60; i++)
+            _output.Received(2)
+                .OutputLine(Arg.Is<string>($"Display shows: 0{x}:00"));
+
+            for (int i = 1; i <= x * 60; i++)
             {
-                for (int j = 0; j <= i; j++)
-                {
-                    _output.Received(1)
-                        .OutputLine(x >= 10 ? Arg.Is<string>($"Display shows: {x}:" + (j >= 10 ? $"j" : $"0{j}")) : Arg.Is<string>($"Display shows: 0{x}:" +
-                                                                                                        (j >= 10 ? $"j" : $"0{j}")));
-                }
+                _output.Received(1)
+                    .OutputLine(x+1 >= 10 ? Arg.Is<string>($"Display shows: {x+1}:00") : Arg.Is<string>($"Display shows: 0{x+1}:00"));
             }
         }
 
@@ -124,6 +120,8 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
             //Assert
             _output.Received(2).OutputLine(Arg.Is("Display cleared"));
         }
+
+
 
     }
 }
