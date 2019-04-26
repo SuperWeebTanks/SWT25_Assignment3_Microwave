@@ -86,12 +86,12 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
         }
 
         [Test]
-        public void OutPutLine_ShowTimeTicks_LogsLine(
-            [Values(1, 2, 10)] int x)
+        public void OutPutLine_ShowTimeTicks_LogsLineForMinutes(
+            [Values(1,2)] int x)
         {
             //Act 
             _powerButtonDriven.Press();
-            for (int i = 0; i <= x; i++)
+            for (int i = 0; i < x; ++i)
             {
                 _timerButtonDriven.Press();
             }
@@ -99,13 +99,35 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
 
             Thread.Sleep(x*61*1000);
 
-            _output.Received(2)
-                .OutputLine(Arg.Is<string>($"Display shows: 0{x}:00"));
-
-            for (int i = 1; i <= x * 60; i++)
+            _output.Received(1).OutputLine(Arg.Is<string>($"Display shows: {x:D2}:00"));
+            _output.Received(1).OutputLine(Arg.Is<string>($"Display shows: 00:00"));
+            for (int i = 1; i<=x-1; i++)
             {
-                _output.Received(1)
-                    .OutputLine(x+1 >= 10 ? Arg.Is<string>($"Display shows: {x+1}:00") : Arg.Is<string>($"Display shows: 0{x+1}:00"));
+                _output.Received(2).OutputLine(Arg.Is<string>($"Display shows: {i:D2}:00"));
+            }
+        }
+
+        
+        [Test]
+        public void OutPutLine_ShowTimeTicks_LogsLineForSeconds(
+            [Values(1,2)] int x)
+        {
+            //Act 
+            _powerButtonDriven.Press();
+            for (int i = 0; i < x; ++i)
+            {
+                _timerButtonDriven.Press();
+            }
+            _startCancelButtonDriven.Press();
+
+            Thread.Sleep(x * 61 * 1000);
+
+            for (int j = 0; j <= x-1; j++)
+            {
+                for (int i = 1; i <= 59; i++)
+                {
+                    _output.Received(i == 0 || (j == 0  && i == 0) ? 2 : 1).OutputLine(Arg.Is<string>($"Display shows: {j:D2}:{i:D2}"));
+                }
             }
         }
 
