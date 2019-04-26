@@ -43,7 +43,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
         }
 
         [Test]
-        public void StartCooking_PowerTubeTurnsOn_OutputLineCalled()
+        public void StartCooking_PowerTubeTurnsOn_OutputLineCalledCorrectly()
         {
             _powerButtonDriven.Press();
             _timerButtonDriven.Press();
@@ -53,7 +53,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
         }
 
         [Test]
-        public void Stop_PowerTubeTurnsOff_OutputLineCalled()
+        public void Stop_PowerTubeTurnsOff_OutputLineCalledCorrectly()
         {
             _powerButtonDriven.Press();
             _timerButtonDriven.Press();
@@ -64,7 +64,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
         }
 
         [Test]
-        public void OnTimerExpired_PowerTubeTurnsOff_OutputLineCalled()
+        public void OnTimerExpired_PowerTubeTurnsOff_OutputLineCalledCorrectly()
         {
             _doorDriven.Open();
             _doorDriven.Close();
@@ -74,6 +74,17 @@ namespace Microwave.Test.Unit.Integrationstest.IT4
             Thread.Sleep(61000);
 
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube turned off")));
+        }
+
+        [Test]
+        public void OnDoorOpened_WhileCookingPowerTubeTurnsOff_OutputLineCalledCorrectly()
+        {
+            _powerButtonDriven.Press();
+            _timerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+            _doorDriven.Open();
+
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Equals("PowerTube turned off")));
         }
 
         [TestCase(1)]
