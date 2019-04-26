@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 using System.Threading;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
@@ -52,7 +53,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
 
 
         [Test]
-        public void Display_ShowPowerOutPut_LogsLineCorrectPowerLevel(
+        public void OutPutLine_ShowPowerOutPut_LogsLineCorrectPowerLevel(
             [Values(1,2,3,4,5,6,7,8,9,9,10,11,100)] int x)
         {
             //Act
@@ -67,7 +68,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
         }
 
         [Test]
-        public void Display_ShowTimerOutPut_LogsCorrectLine(
+        public void OutPutLine_ShowTimerOutPut_LogsCorrectLine(
             [Values(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99, 100, 101)] int x)
         {
             //Act
@@ -85,8 +86,8 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
         }
 
         [Test]
-        public void Display_ShowTimeTicks_LogsLine(
-            [Values(1, 2, 3)] int x)
+        public void OutPutLine_ShowTimeTicks_LogsLine(
+            [Values(1, 2, 10)] int x)
         {
             //Act 
             _powerButtonDriven.Press();
@@ -109,7 +110,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
         }
 
         [Test]
-        public void Display_CookingIsDone_OutputCleared()
+        public void OutPutLine_CookingIsDone_OutputCleared()
         {
             //Act
             _powerButtonDriven.Press();
@@ -121,6 +122,55 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
             _output.Received(2).OutputLine(Arg.Is("Display cleared"));
         }
 
+        [Test]
+        public void OutPutLine_UserOpensDoorDuringSetup_DisplayCleared()
+        {
+            //Act
+            _powerButtonDriven.Press();
+            _doorDriven.Open();
+
+            //Assert
+            _output.Received(1).OutputLine(Arg.Is("Display cleared"));
+        }
+
+        [Test]
+        public void OutPutLine_UserOpensDoorDuringCooking_DisplayCleared()
+        {
+            //Act
+            _powerButtonDriven.Press();
+            _timerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+            _doorDriven.Open();
+
+            //Assert
+            _output.Received(1).OutputLine(Arg.Is("Display cleared"));
+
+        }
+
+        [Test]
+        public void OutPutLine_UserPressesStartCancelButton_DisplayCleared()
+        {
+            //Act
+            _powerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+
+            //Assert
+            //Assert
+            _output.Received(1).OutputLine(Arg.Is("Display cleared"));
+        }
+
+        [Test]
+        public void OutPutLine_UserPressesStartCancelButtonDuringCooking_DisplayCleared()
+        {
+            //Act
+            _powerButtonDriven.Press();
+            _timerButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+            _startCancelButtonDriven.Press();
+
+            //Assert
+            _output.Received().OutputLine(Arg.Is("Display cleared"));
+        }
 
 
     }

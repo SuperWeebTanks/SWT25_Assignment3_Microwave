@@ -48,7 +48,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         //Open door, light received TurnON() (Normal SD)
         [Test]
-        public void UI_UserOpensDoor_TurnOnIsCalled()
+        public void TurnOn_UserOpensDoor_TurnOnIsCalled()
         {
             //Act
             _doorDriven.Open();
@@ -59,7 +59,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         [Test]
         //Open already Opened door 
-        public void UI_UserOpensAlreadyOpenedDoor_TurnOnIsNotCalled()
+        public void TurnOn_UserOpensAlreadyOpenedDoor_TurnOnIsNotCalled()
         {
             //Act
             _doorDriven.Open();
@@ -70,7 +70,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         [Test]
         //Close door, light received TurnOff() (Normal SD) 
-        public void UI_UserClosesOpenedDoor_TurnOffIsCalled()
+        public void TurnOff_UserClosesOpenedDoor_TurnOffIsCalled()
         {
             //Act
             _doorDriven.Open();
@@ -82,7 +82,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
 
         [Test]
-        public void UI_UserClosesDoorButDoorIsAlreadyClosed_TurnOffIsNotCalled()
+        public void TurnOff_UserClosesDoorButDoorIsAlreadyClosed_TurnOffIsNotCalled()
         {
             //Act
             _doorDriven.Open();
@@ -97,7 +97,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         //Open door, CookController received Stop() (Extension 2) 
         //User opens the door during setup 
         [Test]
-        public void UI_UserOpensDoorDuringSetup_LightOn()
+        public void TurnOn_UserOpensDoorDuringSetup_LightOn()
         {
             //Act 
             _powerButton.Pressed += Raise.Event(); 
@@ -109,7 +109,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         }
 
         [Test]
-        public void UI_UserOpensDoorDuringSetup_DisplayCleared()
+        public void Clear_UserOpensDoorDuringSetup_DisplayCleared()
         {
             //Act 
             _powerButton.Pressed += Raise.Event();
@@ -122,7 +122,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         //Open door, CookController received Stop() (Extension 4)
         //User opens the door during cooking 
         [Test]
-        public void UI_UserOpensDoorDuringCooking_CookingStopsDisplayBlanked()
+        public void Stop_UserOpensDoorDuringCooking_CookingStopsDisplayBlanked()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
@@ -136,7 +136,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
         }
 
         [Test]
-        public void UI_UserOpensDoorDuringCooking_DisplayCleared()
+        public void Clear_UserOpensDoorDuringCooking_DisplayCleared()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
@@ -151,7 +151,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         //Step 15, User opens door efter timer has expired and food is ready 
         [Test]
-        public void UI_UserOpensDoorAfterFoodIsReady_LightOn()
+        public void TurnOn_UserOpensDoorAfterFoodIsReady_LightOn()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
@@ -166,7 +166,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT1
 
         //Step 18, User closes door after removing food. 
         [Test]
-        public void UI_UserClosesDoorAfterRemovingFood_LightOff()
+        public void TurnOff_UserClosesDoorAfterRemovingFood_LightOff()
         {
             //Act
             _powerButton.Pressed += Raise.Event();
