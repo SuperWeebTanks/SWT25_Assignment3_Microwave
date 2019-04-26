@@ -87,7 +87,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
 
         [Test]
         public void OutPutLine_ShowTimeTicks_LogsLineForMinutes(
-            [Values(1,2,3)] int x)
+            [Values(1,2)] int x)
         {
             //Act 
             _powerButtonDriven.Press();
@@ -110,7 +110,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT5
         
         [Test]
         public void OutPutLine_ShowTimeTicks_LogsLineForSeconds(
-            [Values(1,2,3)] int x)
+            [Values(1,2)] int x)
         {
             //Act 
             _powerButtonDriven.Press();

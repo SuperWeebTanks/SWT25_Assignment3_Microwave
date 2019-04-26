@@ -58,7 +58,7 @@ namespace Microwave.Test.Unit.Integrationstest.IT3
                 _timerButtonDriven.Press();
             }
             _startCancelButtonDriven.Press();
-            Assert.That(_timerToIntegrate.TimeRemaining,Is.EqualTo(x*60));
+            Assert.That(_timerToIntegrate.TimeRemaining,Is.EqualTo(x*60*1000));
         }
 
         [Test]
